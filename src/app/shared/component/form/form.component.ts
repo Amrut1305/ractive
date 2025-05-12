@@ -12,7 +12,6 @@ import { Icountry } from '../../model/country';
 })
 export class FormComponent implements OnInit {
 
-
   countryArr: Array<Icountry> = COUNTRIES_META_DATA
   userForm !: FormGroup
   genderArr: Array<string> = ['male', 'female', 'other']
@@ -66,6 +65,10 @@ export class FormComponent implements OnInit {
   onFormSubmit() {
     console.log(this.userForm.value);
     console.log(this.userForm);
+  }
+
+  onFormReset(){
+    this.userForm.reset()
   }
 
   onAddDependent() {
