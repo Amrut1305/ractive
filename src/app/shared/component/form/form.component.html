@@ -1,0 +1,198 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <h2 class="alert alert-primary text-center">Reactive Form For User</h2>
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>User Name</mat-label>
+                        <input matInput formControlName="username">
+                        <!-- usename required -->
+                        <mat-error *ngIf="f['username'].touched && f['username'].hasError('required')">User Name is
+                            Required</mat-error>
+
+                        <!-- username pattern -->
+                        <mat-error *ngIf="f['username'].dirty && f['username'].hasError('pattern')">Incorrect
+                            Pattern</mat-error>
+
+                        <!-- username Spacebar -->
+                        <mat-error *ngIf="f['username'].dirty && f['username'].hasError('spaceErr')">Spacebar Not
+                            Allowed</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput formControlName="email">
+                        <!-- email required -->
+                        <mat-error *ngIf="f['email'].touched && f['email'].hasError('required')">Email is
+                            Required</mat-error>
+                        <!-- email pattern -->
+                        <mat-error *ngIf="f['email'].dirty && f['email'].hasError('pattern')">Incorrect
+                            Pattern</mat-error>
+
+                        <!-- email space -->
+                        <mat-error *ngIf="f['email'].dirty && f['email'].hasError('spaceErr')">Spacebar Not
+                            Allowed</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Employee Id</mat-label>
+                        <input matInput formControlName="emplId">
+
+                        <mat-error *ngIf="f['emplId'].touched && f['emplId'].hasError('required')">Employee Id is
+                            Required</mat-error>
+
+                        <mat-error *ngIf="f['emplId'].dirty && f['emplId'].hasError('pattern')">Incorrect
+                            Pattern</mat-error>
+
+                        <mat-error
+                            *ngIf="f['emplId'].dirty && f['emplId'].hasError('spaceErr')">{{f['emplId'].errors?.['spaceErr']}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-radio-group aria-label="Select an option" formControlName="gender">
+                        <mat-radio-button class="ml-3" *ngFor="let gender of genderArr" [value]="gender">{{gender |
+                            titlecase}}</mat-radio-button>
+                    </mat-radio-group>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Current Address</h3>
+                            <div class="cAddrees" formGroupName="cAddress">
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>Select Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let c of countryArr"
+                                            [value]="c.Country">{{c.Country}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>State</mat-label>
+                                    <input matInput formControlName="state">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>Pin Code</mat-label>
+                                    <input matInput formControlName="pincode">
+                                    <!-- <mat-error
+                                        *ngIf="f['pincode'].dirty && f['pincode'].hasError('pattern')">Pattern Error e.g.415412
+                                    </mat-error> -->
+                                </mat-form-field>
+
+
+                            </div>
+                            <mat-checkbox formControlName="check">Is current address and permanant address
+                                Same</mat-checkbox>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Permanant Address</h3>
+                            <div class="cAddrees" formGroupName="pAddress">
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>Select Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option *ngFor="let c of countryArr"
+                                            [value]="c.Country">{{c.Country}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>State</mat-label>
+                                    <input matInput formControlName="state">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <mat-label>Pin Code</mat-label>
+                                    <input matInput formControlName="pincode">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Enter your skills</h3>
+                    <div class="skills mb-3" formArrayName="skills">
+                        <div class="row" *ngFor="let skill of skillArr.controls ; let i = index">
+                            <div class="col-md-10">
+                                <mat-form-field appearance="fill" class="w-100">
+                                    <input matInput [formControlName]="i">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="mb-2" type="button" (click)="onRemoveSkill(i)" *ngIf="i>0" mat-raised-button
+                                    color="warn">Remove Skill</button>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="skillArr.length<5; else noskill">
+                            <button [disabled]="f['skills'].invalid" type="button" (click)="onAddSkill()" mat-raised-button color="accent">Add
+                                Skill</button>
+                        </ng-container>
+                        <ng-template #noskill>
+                            <strong class="text-success">You Can Add only 5 skill</strong>
+                        </ng-template>
+                    </div>
+
+                    <h3>Enter Nominee Details</h3>
+                    <div class="dependent mb-3" formArrayName="dependent">
+                        <div class="row" [formGroupName]="i" *ngFor="let dep of depArr.controls; let i = index">
+                            <div class="col-md-11">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <mat-form-field appearance="fill" class="w-100">
+                                            <mat-label>First Name</mat-label>
+                                            <input matInput formControlName="fname">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-4">
+                                        <mat-form-field appearance="fill" class="w-100">
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput formControlName="lname">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-4">
+                                        <mat-form-field appearance="fill" class="w-100">
+                                            <mat-label>Relation</mat-label>
+                                            <input matInput formControlName="relation">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <mat-icon *ngIf="i>0" class="removeicon" color="warn"
+                                    (click)="onRemoveDependent(i)">delete</mat-icon>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="depArr.length<5 ; else nodependent">
+                            <button [disabled]="f['dependent'].invalid" type="button"
+                                (click)="onAddDependent()" mat-raised-button color="accent">Add
+                                Nominee</button>
+                        </ng-container>
+                        <ng-template #nodependent>
+                            <strong class="text-success">You Can Add only 3 dependent</strong>
+                        </ng-template>
+                    </div>
+
+                    <h3>Set Password</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="fill" class="w-100">
+                                <mat-label>Password</mat-label>
+                                <input matInput formControlName="password">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="fill" class="w-100">
+                                <mat-label>Confirm Password</mat-label>
+                                <input matInput formControlName="confirmpassword">
+                                <mat-error
+                                    *ngIf="f['confirmpassword'].dirty && f['confirmpassword'].hasError('passMissMatch')"
+                                    class="text-danger">Password and Confirm Password Should be same</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+                    <button mat-raised-button color="primary">Submit Form</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
