@@ -13,11 +13,19 @@
 
                         <!-- username pattern -->
                         <mat-error *ngIf="f['username'].dirty && f['username'].hasError('pattern')">Incorrect
-                            Pattern</mat-error>
+                            Pattern of username</mat-error>
 
                         <!-- username Spacebar -->
                         <mat-error *ngIf="f['username'].dirty && f['username'].hasError('spaceErr')">Spacebar Not
-                            Allowed</mat-error>
+                            Allowed in username</mat-error>
+
+                        <!-- username min length -->
+                        <mat-error *ngIf="f['username'].dirty && f['username'].hasError('minlength')">Minimum length of
+                            username should be 5 characters</mat-error>
+
+                        <!-- username max length -->
+                        <mat-error *ngIf="f['username'].dirty && f['username'].hasError('maxlength')">Maximum length of
+                            username should be 10 characters</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="w-100">
@@ -43,7 +51,7 @@
                             Required</mat-error>
 
                         <mat-error *ngIf="f['emplId'].dirty && f['emplId'].hasError('pattern')">Incorrect
-                            Pattern</mat-error>
+                            Pattern of Employee Id (e.g. E123)</mat-error>
 
                         <mat-error
                             *ngIf="f['emplId'].dirty && f['emplId'].hasError('spaceErr')">{{f['emplId'].errors?.['spaceErr']}}</mat-error>
@@ -74,9 +82,9 @@
                                 <mat-form-field appearance="fill" class="w-100">
                                     <mat-label>Pin Code</mat-label>
                                     <input matInput formControlName="pincode">
-                                    <!-- <mat-error
-                                        *ngIf="f['pincode'].dirty && f['pincode'].hasError('pattern')">Pattern Error e.g.415412
-                                    </mat-error> -->
+                                    <mat-error
+                                        *ngIf="f['cAddress'].get('pincode')?.dirty && f['cAddress'].get('pincode')?.hasError ('pattern')">pincode pattern does not match required condition (e.g.415412)
+                                    </mat-error>
                                 </mat-form-field>
 
 
@@ -103,6 +111,10 @@
                                     <mat-label>Pin Code</mat-label>
                                     <input matInput formControlName="pincode">
                                 </mat-form-field>
+
+                                <mat-error
+                                    *ngIf="f['pAddress'].get('pincode')?.dirty && f['pAddress'].get('pincode')?.hasError ('pattern')">pincode pattern does not match required condition (e.g.415412)
+                                </mat-error>
                             </div>
                         </div>
                     </div>
@@ -116,12 +128,13 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
-                                <button class="mb-2" type="button" (click)="onRemoveSkill(i)" *ngIf="i>0" mat-raised-button
-                                    color="warn">Remove Skill</button>
+                                <button class="mb-2" type="button" (click)="onRemoveSkill(i)" *ngIf="i>0"
+                                    mat-raised-button color="warn">Remove Skill</button>
                             </div>
                         </div>
                         <ng-container *ngIf="skillArr.length<5; else noskill">
-                            <button [disabled]="f['skills'].invalid" type="button" (click)="onAddSkill()" mat-raised-button color="accent">Add
+                            <button [disabled]="f['skills'].invalid" type="button" (click)="onAddSkill()"
+                                mat-raised-button color="accent">Add
                                 Skill</button>
                         </ng-container>
                         <ng-template #noskill>
@@ -161,8 +174,8 @@
                         </div>
 
                         <ng-container *ngIf="depArr.length<5 ; else nodependent">
-                            <button [disabled]="f['dependent'].invalid" type="button"
-                                (click)="onAddDependent()" mat-raised-button color="accent">Add
+                            <button [disabled]="f['dependent'].invalid" type="button" (click)="onAddDependent()"
+                                mat-raised-button color="accent">Add
                                 Nominee</button>
                         </ng-container>
                         <ng-template #nodependent>
@@ -191,7 +204,8 @@
 
 
                     <button mat-raised-button color="primary" class="w-100 mb-2">Submit Form</button>
-                    <button (click)="onFormReset()" type="button" mat-raised-button color="warn" class="w-100">Reset Form</button>
+                    <button (click)="onFormReset()" type="button" mat-raised-button color="warn" class="w-100">Reset
+                        Form</button>
                 </form>
             </mat-card-content>
         </mat-card>

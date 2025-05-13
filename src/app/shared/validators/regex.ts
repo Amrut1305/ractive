@@ -7,5 +7,5 @@ export class CustomRegex {
      static email = '^[a-zA-Z0-9.-]+@[a-zA-Z0-9-.]+\\.[a-zA-Z]{2,100}$';
      static updateEmail =
       '/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,9}))$/';
-      static pincode = '^[1-9][0-9]{5}$'
+        static pincode = '^[1-9][0-9]{5}$'
   }
