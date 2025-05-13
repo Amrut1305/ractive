@@ -43,6 +43,10 @@
                             Allowed</mat-error>
                     </mat-form-field>
 
+                    <!-- email max length -->
+                    <mat-error *ngIf="f['email'].dirty && f['email'].hasError('maxlength')">Maximum length of
+                        email should be 20 characters</mat-error>
+
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Employee Id</mat-label>
                         <input matInput formControlName="emplId">
@@ -83,7 +87,8 @@
                                     <mat-label>Pin Code</mat-label>
                                     <input matInput formControlName="pincode">
                                     <mat-error
-                                        *ngIf="f['cAddress'].get('pincode')?.dirty && f['cAddress'].get('pincode')?.hasError ('pattern')">pincode pattern does not match required condition (e.g.415412)
+                                        *ngIf="f['cAddress'].get('pincode')?.dirty && f['cAddress'].get('pincode')?.hasError ('pattern')">pincode
+                                        pattern does not match required condition (e.g.415412)
                                     </mat-error>
                                 </mat-form-field>
 
@@ -113,7 +118,8 @@
                                 </mat-form-field>
 
                                 <mat-error
-                                    *ngIf="f['pAddress'].get('pincode')?.dirty && f['pAddress'].get('pincode')?.hasError ('pattern')">pincode pattern does not match required condition (e.g.415412)
+                                    *ngIf="f['pAddress'].get('pincode')?.dirty && f['pAddress'].get('pincode')?.hasError ('pattern')">pincode
+                                    pattern does not match required condition (e.g.415412)
                                 </mat-error>
                             </div>
                         </div>
