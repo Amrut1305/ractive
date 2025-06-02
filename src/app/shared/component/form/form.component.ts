@@ -45,7 +45,7 @@ export class FormComponent implements OnInit {
         country: new FormControl('', Validators.required),
         state: new FormControl('', Validators.required),
         pincode: new FormControl('', [Validators.required, Validators.pattern(CustomRegex.pincode)])
-      }),
+      }), 
       skills: new FormArray([]),
 
       dependent: new FormArray([
